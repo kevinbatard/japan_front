@@ -1,20 +1,20 @@
-.svg{
-  z-index: 1;
-}
+
 
 .pref {
     stroke:#000000 ;
     stroke-width:0.5;
     transition: transform 0.5s;
-    fill:#d5392a;
-    z-index: 0;
+    fill:#ffefed;
+  
 
   }
 
   .pref:hover {
     transform : scale(1.1) ;
     position:relative;
-    z-index : 50
+    fill: #d5392a;
+    cursor: pointer;
+
   }
 
   #Tohoku {

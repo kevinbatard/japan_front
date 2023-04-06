@@ -1,25 +1,28 @@
 import { useState } from 'react';
 import './App.css';
-import './carte-style.css';
 import Card from './carte/components/Card';
 import Carte from './carte/components/Carte';
+import Navbar from './navbar/components/Navbar';
 
 function App() {
-    const [showComponent, setShowComponent] = useState(false);
+    const [showComponent, setShowComponent] = useState<boolean>(false);
+    const [region, setRegion] = useState<string>('');
+
     return (
         <div className="App">
+            <header>
+                <Navbar />
+            </header>
             <main>
-                <div className="d-flex mt-4 justify-content-around container">
-                    <div className="me-5 d-flex flex-column">
-                        <img
-                            className="logo ps-4 mb-5"
-                            src="./img/logo.png"
-                            alt="logo Japan's Travels"
-                        />
-                        <div className="mt-5">{showComponent && <Card />}</div>
+                <div className="d-flex justify-content-between align-items-center container">
+                    <div className="me-3 pb-5">
+                        {showComponent && <Card region={region} />}
                     </div>
-                    <div className="ms-5 carte">
-                        <Carte setShowComponent={setShowComponent} />
+                    <div className="me-5 carte">
+                        <Carte
+                            setShowComponent={setShowComponent}
+                            setRegion={setRegion}
+                        />
                     </div>
                 </div>
             </main>

@@ -1,8 +1,12 @@
+import './carte-style.css';
+
 export default function Carte(props: {
     setShowComponent: React.Dispatch<React.SetStateAction<boolean>>;
+    setRegion: React.Dispatch<React.SetStateAction<string>>;
 }) {
-    const handleMouseOver = () => {
+    const handleMouseOver = (e: any) => {
         props.setShowComponent(true);
+        props.setRegion(e.target.id);
     };
 
     const handleMouseOut = () => {
@@ -12,7 +16,6 @@ export default function Carte(props: {
     return (
         <div>
             <svg
-                className="mt-5 svg"
                 width="150mm"
                 viewBox="0 0 250 263"
                 version="1.1"
