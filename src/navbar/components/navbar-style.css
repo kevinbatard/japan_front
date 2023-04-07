@@ -6,3 +6,32 @@
     
     width: 15rem;    
 }
+
+a {
+    position: relative;
+    color: #d5392a;
+    text-decoration: none;
+    font-family: 'Gruppo', cursive;
+  }
+  
+  a:hover {
+    color: #d5392a;
+  }
+  
+  a::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #d5392a;
+    transform: scaleX(0);
+    transform-origin: bottom left;
+    transition: transform 0.3s ease;
+  }
+  
+  a:hover::before {
+    transform: scaleX(1);
+  }

@@ -2,7 +2,7 @@ import './navbar-style.css';
 
 export default function Navbar() {
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-color px-5">
+        <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-color px-3">
             <img
                 className="logo  p-auto"
                 src="./img/logo.png"
@@ -25,10 +25,10 @@ export default function Navbar() {
                 className="collapse navbar-collapse justify-content-end"
                 id="navbarNav"
             >
-                <button className="nav-item btn btn-lg">Loggin</button>
-                <button className="nav-item btn btn-lg">S'enregistrer</button>
-                <button className="nav-item btn btn-lg">Profile</button>
+                <a className="nav-item me-2 fs-2 fw-semibold" href='#0'>Loggin</a>
+                <a className="nav-item mx-2 fs-2 fw-semibold" href='#0'>S'enregistrer</a>                
+                <a className="nav-item mx-2 fs-2 fw-semibold" href='#0'>Profile</a>
             </div>
-        </nav>
+        </nav>    
     );
 }
