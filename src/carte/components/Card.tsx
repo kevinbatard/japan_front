@@ -5,8 +5,8 @@ export default function Card(props: { region: string }) {
         <div className="card m-auto card-style">
             <img
                 src={`./img/${props.region}.jpg`}
-                className="card-img-top"
-                alt={`Image de ${props.region}`}
+                className="card-img-top img-size"
+                alt={` ${props.region}`}
             />
             <div className="card-body">
                 <p className="card-text">

@@ -1,3 +1,8 @@
 .card-style{
     width: 30em;
+    transition: transform 0.5s;
+}
+
+.img-size{
+    height: 18em;
 }
