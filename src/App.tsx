@@ -14,8 +14,8 @@ function App() {
                 <Navbar />
             </header>
             <main>
-                <div className="d-flex justify-content-between align-items-center container">
-                    <div className="me-3 pb-5">
+                <div className="d-flex justify-content-around align-items-center accueil">
+                    <div className="me-3 pb-5 card-style ">
                         {showComponent && <Card region={region} />}
                     </div>
                     <div className="me-5 carte">
