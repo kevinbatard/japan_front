@@ -1,8 +1,18 @@
 .card-style{
     width: 30em;
-    transition: transform 0.5s;
+    /*transition: transform 0.5s;*/
+    animation: fadeIn 0.5s;
 }
 
 .img-size{
     height: 18em;
+}
+
+@keyframes fadeIn{
+    0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.card-style::after{
+    opacity: 0;
 }
