@@ -1,14 +1,24 @@
-import { useState } from 'react';
+import {  useEffect, useState } from 'react';
 import './App.css';
 import Card from './carte/components/Card';
 import Carte from './carte/components/Carte';
 import Navbar from './navbar/components/Navbar';
+import { TRegion } from './Types/TRegion';
+import { UserContextProvider } from "./context/user-context";
 
 function App() {
     const [showComponent, setShowComponent] = useState<boolean>(false);
-    const [region, setRegion] = useState<string>('');
+    const [regionHover, setRegionHover] = useState<string>('');
 
-    return (
+    const [region, setRegion] = useState<TRegion[]>()
+    const options = {method: 'GET'};
+
+    useEffect(() =>{ fetch('http://localhost:8000/api/regions/', options)
+        .then(response => response.json())
+        .then(response => setRegion(response.data))
+        .catch(err => console.error(err));}, [])
+
+    return (<UserContextProvider>
         <div className="App">
             <header>
                 <Navbar />
@@ -16,18 +26,18 @@ function App() {
             <main>
                 <div className="d-flex justify-content-around align-items-center accueil">
                     <div className="me-3 pb-5 card-style ">
-                        {showComponent && <Card region={region} />}
+                        {showComponent && <Card regionHover={regionHover} region={region} />}
                     </div>
                     <div className="me-5 carte">
                         <Carte
                             setShowComponent={setShowComponent}
-                            setRegion={setRegion}
+                            setRegionHover={setRegionHover}
                         />
                     </div>
                 </div>
             </main>
             <footer></footer>
-        </div>
+        </div></UserContextProvider>
     );
 }
 

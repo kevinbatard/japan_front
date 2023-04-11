@@ -2,11 +2,11 @@ import './carte-style.css';
 
 export default function Carte(props: {
     setShowComponent: React.Dispatch<React.SetStateAction<boolean>>;
-    setRegion: React.Dispatch<React.SetStateAction<string>>;
+    setRegionHover: React.Dispatch<React.SetStateAction<string>>;
 }) {
     const handleMouseOver = (e: any) => {
         props.setShowComponent(true);
-        props.setRegion(e.target.id);
+        props.setRegionHover(e.target.id);
     };
 
     const handleMouseOut = () => {

@@ -1,12 +1,29 @@
-import { useState } from 'react';
+
 import { TRegion } from '../../Types/TRegion';
 import './card-style.css';
 
-export default function Card(props: { region: string }) {
+export default function Card(props: { regionHover: string, region: TRegion[] | undefined }) {
 
-    const [hover, setHover] = useState<TRegion>()
+    const dataRegion = props.region?.map((elm) => elm).filter(elm => elm.name === props.regionHover)
 
-    const options = {
+    return (
+        <div className="card m-auto card-style">
+            <img
+                src={`./img/${props.regionHover}.jpg`}
+                className="card-img-top img-size"
+                alt={` ${props.regionHover}`}
+            />
+            <div className="card-body">
+                <h1>{dataRegion![0].name}</h1>
+                <p className="card-text">
+                   {dataRegion![0].description} 
+                </p>
+            </div>
+        </div>
+    );
+}
+
+/* const options = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({name: props.region})
@@ -18,20 +35,4 @@ export default function Card(props: { region: string }) {
         .then(response => setHover(response.data))
         .catch(err => console.error(err));
 
-
-    return (
-        <div className="card m-auto card-style">
-            <img
-                src={`./img/${props.region}.jpg`}
-                className="card-img-top img-size"
-                alt={` ${props.region}`}
-            />
-            <div className="card-body">
-                <h1>{hover?.name}</h1>
-                <p className="card-text">
-                    {hover?.description}
-                </p>
-            </div>
-        </div>
-    );
-}
+ */
