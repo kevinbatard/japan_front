@@ -1,4 +1,4 @@
-import './carte-style.css';
+import './styles/carte-style.css';
 
 export default function Carte(props: {
     setShowComponent: React.Dispatch<React.SetStateAction<boolean>>;

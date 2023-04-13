@@ -1,0 +1,16 @@
+.text-style{
+    color: #d5392a;
+}
+
+.modal-style{
+    font-family: 'Gruppo', cursive;
+}
+
+.btn-primary{
+    background-color: #d5392a;
+    --bs-btn-hover-bg: #d5392a;
+    --bs-btn-active-bg: #d5392a;
+    --bs-btn-border-color: #d5392a;
+    --bs-btn-hover-border-color:#d5392a;
+    --bs-btn-active-border-color: #d5392a;
+}

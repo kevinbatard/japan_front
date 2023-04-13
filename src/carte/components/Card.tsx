@@ -1,6 +1,6 @@
 
 import { TRegion } from '../../Types/TRegion';
-import './card-style.css';
+import './styles/card-style.css';
 
 export default function Card(props: { regionHover: string, region: TRegion[] | undefined }) {
 
