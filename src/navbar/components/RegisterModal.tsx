@@ -73,7 +73,7 @@ export default function RegisterModal() {
               aria-label="Close"
             ></button>
           </div>
-          <div className="modal-body" onMouse>
+          <div className="modal-body">
             <label
               htmlFor="exampleInputEmail1"
               className="form-label modal-style fw-bold"
