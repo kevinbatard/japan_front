@@ -3,13 +3,14 @@ import "./styles/navbar-style.css";
 import { UserContext } from "../../context/user-context";
 import ConnexionModal from "./ConnexionModal";
 import RegisterModal from "./RegisterModal";
+import "../../region/styles/region-style.css";
 
 export default function Navbar() {
   const { user } = useContext(UserContext);
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-color px-3">
+    <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-color px-3 ">
       <img
-        className="logo  p-auto"
+        className="logo p-auto"
         src="./img/logo.png"
         alt="logo Japan's Travels"
       />
@@ -27,11 +28,11 @@ export default function Navbar() {
       </button>
 
       <div
-        className="collapse navbar-collapse justify-content-end"
+        className="collapse navbar-collapse d-flex mobile-nav"
         id="navbarNav"
       >
         {!user.access_token && (
-          <>
+          <div>
             <a
               className="nav-item me-2 fs-2 fw-semibold"
               href="#0"
@@ -41,10 +42,10 @@ export default function Navbar() {
               Connexion
             </a>
             <ConnexionModal />
-          </>
+          </div>
         )}
         {!user.access_token && (
-          <>
+          <div>
             <a
               className="nav-item mx-2 fs-2 fw-semibold"
               href="#0"
@@ -54,7 +55,7 @@ export default function Navbar() {
               S'enregistrer
             </a>
             <RegisterModal />
-          </>
+          </div>
         )}
         {user.access_token && (
           <a className="nav-item mx-2 fs-2 fw-semibold" href="#0">

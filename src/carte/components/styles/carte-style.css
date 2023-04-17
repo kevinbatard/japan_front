@@ -40,8 +40,6 @@
   #Kantō {
     transform-origin: 162px 160px;
 
- 
-    
   }
 
   #Chūgoku {
@@ -57,6 +55,7 @@
     .carte{
       display: none;
     }
+
   }
   
  

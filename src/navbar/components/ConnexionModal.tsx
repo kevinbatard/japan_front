@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import "./styles/modal-style.css";
 import { UserContext } from "../../context/user-context";
 import { TUser } from "../../Types/TUser";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 export default function ConnexionModal() {
   const { onUserChange } = useContext(UserContext);
