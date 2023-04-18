@@ -1,51 +1,49 @@
-import { TRegion } from "../../Types/TRegion";
-import "../styles/region-style.css";
+import { TRegion } from '../../Types/TRegion';
+import '../styles/region-style.css';
 
-export default function Regions(props: { region: TRegion[] }) {
-  const isPair = (key: number) => {
-    if (key % 2 === 1) return true;
-  };
-
-  const unicRegion = props.region.map((elm, key) => (
-    <div
-      key={key}
-      className={
-        isPair(key)
-          ? "d-flex justify-content-center my-3 slide-in-right photo-brightness"
-          : "d-flex justify-content-center my-3 slide-in-left photo-brightness"
-      }
-    >
-      <img
-        src={`./img/${elm.name}.jpg`}
-        style={{ height: 11 + "em" }}
-        className="m-2 "
-        alt={`${elm.name}`}
-      />
-    </div>
-  ));
-  return <div className="region-list">{unicRegion}</div>;
-}
-
-//version gauche droite photo + text
-{
-  /* <div
-      key={key}
-      className={
-        isPair(key)
-          ? "container d-flex flex-row-reverse mt-5 align-items-center"
-          : "container d-flex mt-5 align-items-center"
-      }
-    >
-      <img
-        src={`./img/mobile/${elm.name}.jpg`}
-        style={{ height: 11 + "em" }}
-        className="m-2"
-        alt={`${elm.name}`}
-      />
-      <div className=" text">
-        <h1 className="fs-4">{elm.name}</h1>
-        <p className="">{elm.description_mini}</p>
-      </div>
-    </div>
-  )); */
+export default function Regions(props: {
+    region: TRegion[];
+    setPage: React.Dispatch<React.SetStateAction<string>>;
+}) {
+    const unicRegion = props.region.map((elm, key) => (
+        <div key={key} className="accordion-item region-list">
+            <div className="test">
+                <img
+                    id="flush-headingTwoX"
+                    src={`./img/${elm.name}.jpg`}
+                    alt={`${elm.name}`}
+                    className="accordion-button"
+                    data-mdb-toggle="collapse"
+                    data-mdb-target={`#flush-collapseOne${elm.name}`}
+                    aria-controls={`flush-collapseOne${elm.name}`}
+                />
+            </div>
+            <div
+                id={`flush-collapseOne${elm.name}`}
+                className="accordion-collapse collapse"
+                aria-labelledby={`flush-headingOne${elm.name}`}
+                data-mdb-parent="#accordionFlushExampleX"
+            >
+                <h2 className="accordion-body">{elm.name}</h2>
+                <div className="accordion-body">{elm.description}</div>
+                <div className=" text-center ">
+                    <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={() => props.setPage('Details')}
+                    >
+                        En savoir plus
+                    </button>
+                </div>
+            </div>
+        </div>
+    ));
+    return (
+        <div
+            className="accordion accordion-borderless"
+            id="accordionFlushExampleX"
+        >
+            {unicRegion}
+        </div>
+    );
 }

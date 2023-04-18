@@ -7,6 +7,7 @@
 }
 
 .btn-primary{
+    font-size:x-small;
     background-color: #d5392a;
     --bs-btn-hover-bg: #d5392a;
     --bs-btn-active-bg: #d5392a;

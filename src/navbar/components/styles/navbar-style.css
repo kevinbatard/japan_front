@@ -3,7 +3,7 @@
 }
 
 .logo{
-    
+    cursor: pointer;
     width: 15rem;    
 }
 
@@ -34,6 +34,10 @@ a {
   
   a:hover::before {
     transform: scaleX(1);
+  }
+
+  .navbar{
+    box-shadow: none !important;
   }
 
   

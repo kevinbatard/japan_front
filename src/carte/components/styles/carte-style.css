@@ -56,6 +56,10 @@
       display: none;
     }
 
+    .card-region{
+      display: none !important;
+    }
+
   }
   
  

@@ -1,10 +1,13 @@
-
 import { TRegion } from '../../Types/TRegion';
 import './styles/card-style.css';
 
-export default function Card(props: { regionHover: string, region: TRegion[] | undefined }) {
-
-    const dataRegion = props.region?.map((elm) => elm).filter(elm => elm.name === props.regionHover)
+export default function Card(props: {
+    regionHover: string;
+    region: TRegion[] | undefined;
+}) {
+    const dataRegion = props.region
+        ?.map((elm) => elm)
+        .filter((elm) => elm.name === props.regionHover);
 
     return (
         <div className="card m-auto card-style">
@@ -15,9 +18,7 @@ export default function Card(props: { regionHover: string, region: TRegion[] | u
             />
             <div className="card-body">
                 <h1>{dataRegion![0].name}</h1>
-                <p className="card-text">
-                   {dataRegion![0].description} 
-                </p>
+                <p className="card-text">{dataRegion![0].description}</p>
             </div>
         </div>
     );

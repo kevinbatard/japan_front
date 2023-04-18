@@ -70,15 +70,6 @@
     }
   }
 
-  .photo-brightness img {
-     filter: brightness(100%);
-   -webkit-filter: brightness(100%);
-    }
-    .photo-brightness img:hover {
-   filter: brightness(50%);
-     -webkit-filter: brightness(50%);
-    }
-
 @media (min-width: 992px){
     .region-list{
         display: none;
