@@ -16,14 +16,14 @@ function App() {
     const [page, setPage] = useState<string>('Accueil');
     const [regionHover, setRegionHover] = useState<string>('');
     const [region, setRegion] = useState<TRegion[]>([]);
-    const options = { method: 'GET' };
 
     useEffect(() => {
+        const options = { method: 'GET' };
         fetch('http://localhost:8000/api/regions/', options)
             .then((response) => response.json())
             .then((response) => setRegion(response.data))
             .catch((err) => console.error(err));
-    }, [region]);
+    }, []);
 
     return (
         <UserContextProvider>
