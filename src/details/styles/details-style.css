@@ -1,0 +1,37 @@
+.test{
+    height: 100%;
+}   
+
+.photo-brightness{
+    filter: brightness(50%);
+    -webkit-filter: brightness(50%);
+}
+
+.first-block {
+    position: relative;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .text-centers {
+    text-align: center;
+  }
+  
+  .data-name {
+    font-size: 4vw;
+    font-family: 'Archivo Black', sans-serif; 
+    color: #fff; 
+    
+  }
+
+
+          

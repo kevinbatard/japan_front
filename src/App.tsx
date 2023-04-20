@@ -33,10 +33,16 @@ function App() {
                     <ToastContainer />
                 </header>
                 <main>
-                    {page === 'Details' && <Details />}
+                    {page === 'Details' && (
+                        <Details regionHover={regionHover} region={region} />
+                    )}
                     {page === 'Accueil' && (
                         <div>
-                            <Regions region={region} setPage={setPage} />
+                            <Regions
+                                region={region}
+                                setPage={setPage}
+                                setRegionHover={setRegionHover}
+                            />
                             <div className="d-flex justify-content-around align-items-center accueil card-region mt-4">
                                 <div className="me-3 pb-5 card-style carte">
                                     {showComponent && (

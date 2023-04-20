@@ -18,7 +18,7 @@ export default function Card(props: {
             />
             <div className="card-body">
                 <h1>{dataRegion![0].name}</h1>
-                <p className="card-text">{dataRegion![0].description}</p>
+                <p className="card-text">{dataRegion![0].description_mini}</p>
             </div>
         </div>
     );

@@ -8,9 +8,8 @@
 }
 
 a {
+  color: #d5392a !important;
     position: relative;
-    color: #d5392a;
-    text-decoration: none;
     font-family: 'Gruppo', cursive;
   }
   
