@@ -1,0 +1,17 @@
+.b-color{
+    background-color: white;
+}
+
+.f-size{
+    font-size: small;
+}
+
+.btn-color{
+    background-color: green !important;
+    font-size: x-small !important; 
+    color: white;
+}
+
+.btn-color:hover{
+    color: white !important;
+}
