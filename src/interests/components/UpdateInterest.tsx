@@ -5,8 +5,9 @@ import { BASE_URL } from '../../constant/URL';
 import { UserContext } from '../../context/user-context';
 
 export default function UpdateInterest(props: {
+    interests: TInterests[];
     dataInterest: TInterests | null;
-    setInterests: (value: TInterests) => void;
+    setInterests: React.Dispatch<React.SetStateAction<TInterests[]>>;
 }) {
     const [categories, setCategories] = useState<TCategories[]>([]);
     const [selected, setSelected] = useState<TCategories>();
@@ -77,8 +78,13 @@ export default function UpdateInterest(props: {
         )
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
-                props.setInterests(response.data);
+                const newInterest = [...props.interests];
+                const updateInterests = newInterest.map((elm: TInterests) => {
+                    if (elm.id === props.dataInterest?.id) return response.data;
+                    return elm;
+                });
+                props.setInterests(updateInterests);
+                console.log(updateInterests);
             })
             .catch((err) => console.error(err));
     };
@@ -115,7 +121,7 @@ export default function UpdateInterest(props: {
                             title="name"
                             className="form-control"
                             aria-describedby="emailHelp"
-                            value={newInterest?.name}
+                            value={newInterest?.name || ''}
                             onChange={(e) => inputChange(e)}
                         ></input>
                         <div className="my-3">
@@ -129,7 +135,7 @@ export default function UpdateInterest(props: {
                                 type="text"
                                 title="adress"
                                 className="form-control"
-                                value={newInterest?.adress}
+                                value={newInterest?.adress || ''}
                                 onChange={(e) => inputChange(e)}
                             ></input>
                             <div className="mb-3">
@@ -146,7 +152,7 @@ export default function UpdateInterest(props: {
                                             title="latitude"
                                             className="form-control"
                                             aria-describedby="latitude"
-                                            value={newInterest?.latitude}
+                                            value={newInterest?.latitude || ''}
                                             onChange={(e) => inputChange(e)}
                                         ></input>
                                     </div>
@@ -162,7 +168,7 @@ export default function UpdateInterest(props: {
                                             type="text"
                                             title="longitude"
                                             className="form-control "
-                                            value={newInterest?.longitude}
+                                            value={newInterest?.longitude || ''}
                                             onChange={(e) => inputChange(e)}
                                         ></input>
                                     </div>

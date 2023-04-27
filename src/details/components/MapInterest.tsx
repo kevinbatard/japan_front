@@ -20,12 +20,6 @@ export default function MapInterest(props: {
         (elm) => elm.region.name === props.dataRegion[0].name
     );
 
-    const handleInterest = (value: TInterests) => {
-        const newInterests = [...props.interests];
-        newInterests[dataInterest!.id] = value;
-        props.setInterests(newInterests);
-    };
-
     const marks = thisRegion.map((elm, i) => {
         return (
             <div key={i}>
@@ -88,8 +82,9 @@ export default function MapInterest(props: {
                 {marks}
             </MapContainer>
             <UpdateInterest
+                interests={props.interests}
                 dataInterest={dataInterest}
-                setInterests={(value: TInterests) => handleInterest(value)}
+                setInterests={props.setInterests}
             />
         </>
     );

@@ -26,12 +26,6 @@ export default function Details(props: {
         fetch(`${BASE_URL}/interests/region/${region.current}`)
             .then((response) => response.json())
             .then((response) => {
-                response.data = response.data.map((elm: TInterests) => {
-                    elm.latitude = Number(elm.latitude);
-                    elm.longitude = Number(elm.longitude);
-                    return elm;
-                });
-
                 setInterests(response.data);
             })
             .catch((err) => console.error(err));
