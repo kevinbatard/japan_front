@@ -1,4 +1,5 @@
-.test{
+.banner{
+    width: 100vw;
     height: 100%;
 }   
 
@@ -33,5 +34,12 @@
     
   }
 
+  .color{
+    background-color: #ffefed;
+  }
+
+  .map{
+    height: 500px;
+  }
 
           

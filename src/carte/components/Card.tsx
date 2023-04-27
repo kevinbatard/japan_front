@@ -23,17 +23,3 @@ export default function Card(props: {
         </div>
     );
 }
-
-/* const options = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({name: props.region})
-      };
-
-      
-      fetch('http://localhost:8000/api/regions/get', options)
-        .then(response => response.json())
-        .then(response => setHover(response.data))
-        .catch(err => console.error(err));
-
- */
