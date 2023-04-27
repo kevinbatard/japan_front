@@ -7,17 +7,17 @@
     width: 15rem;    
 }
 
-a {
+.connect {
   color: #d5392a !important;
     position: relative;
     font-family: 'Gruppo', cursive;
   }
   
-  a:hover {
+  .connect:hover {
     color: #d5392a;
   }
   
-  a::before {
+  .connect::before {
     content: "";
     position: absolute;
     display: block;
@@ -31,7 +31,7 @@ a {
     transition: transform 0.3s ease;
   }
   
-  a:hover::before {
+  .connect:hover::before {
     transform: scaleX(1);
   }
 

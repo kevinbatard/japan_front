@@ -39,7 +39,7 @@ export default function Navbar(props: {
                             <>
                                 <li className="nav-item">
                                     <a
-                                        className=" mx-2 fs-2 fw-semibold nav-link"
+                                        className=" mx-2 fs-2 fw-semibold nav-link connect"
                                         href="#0"
                                         data-bs-toggle="modal"
                                         data-bs-target="#connexion"
@@ -52,7 +52,7 @@ export default function Navbar(props: {
                                     <ConnexionModal />
 
                                     <a
-                                        className=" mx-2 fs-2 fw-semibold nav-link"
+                                        className=" mx-2 fs-2 fw-semibold nav-link connect"
                                         href="#0"
                                         data-bs-toggle="modal"
                                         data-bs-target="#register"
@@ -68,7 +68,7 @@ export default function Navbar(props: {
                             <li>
                                 <div className="navbar-nav">
                                     <a
-                                        className=" mx-2 fs-2 fw-semibold nav-link"
+                                        className=" mx-2 fs-2 fw-semibold nav-link connect"
                                         href="#0"
                                     >
                                         Profile
