@@ -9,7 +9,8 @@ import { TRegion } from './Types/TRegion';
 import { UserContextProvider } from './context/user-context';
 import { ToastContainer } from 'react-toastify';
 import Regions from './region/components/Regions';
-import Details from './details/Details';
+import Details from './details/components/Details';
+import { BASE_URL } from './constant/URL';
 
 function App() {
     const [showComponent, setShowComponent] = useState<boolean>(false);
@@ -18,8 +19,7 @@ function App() {
     const [region, setRegion] = useState<TRegion[]>([]);
 
     useEffect(() => {
-        const options = { method: 'GET' };
-        fetch('http://localhost:8000/api/regions/', options)
+        fetch(`${BASE_URL}/regions/`)
             .then((response) => response.json())
             .then((response) => setRegion(response.data))
             .catch((err) => console.error(err));
@@ -43,6 +43,7 @@ function App() {
                                 setPage={setPage}
                                 setRegionHover={setRegionHover}
                             />
+                            <ToastContainer />
                             <div className="d-flex justify-content-around align-items-center accueil card-region mt-4">
                                 <div className="me-3 pb-5 card-style carte">
                                     {showComponent && (
