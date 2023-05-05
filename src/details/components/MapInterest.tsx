@@ -3,18 +3,19 @@ import '../styles/details-style.css';
 import { TInterests } from '../../interests/types/TInterests';
 import { TRegion } from '../../Types/TRegion';
 import DeleteInterest from '../../interests/components/DeleteInterest';
-import { UserContext } from '../../context/user-context';
 import { useContext, useState } from 'react';
 import UpdateInterest from '../../interests/components/UpdateInterest';
+import { ConnectedContext } from '../../context/user-context';
 
 export default function MapInterest(props: {
     interests: TInterests[];
     dataRegion: TRegion[];
     setInterests: React.Dispatch<React.SetStateAction<TInterests[]>>;
 }) {
-    const { user } = useContext(UserContext);
     const [hide, setHide] = useState<boolean>(false);
     const [dataInterest, setDataInterest] = useState<TInterests | null>(null);
+
+    const { user } = useContext(ConnectedContext);
 
     const thisRegion = props.interests.filter(
         (elm) => elm.region.name === props.dataRegion[0].name

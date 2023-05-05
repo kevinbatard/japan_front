@@ -1,14 +1,14 @@
 import { useContext, useState } from 'react';
 import './styles/modal-style.css';
-import { UserContext } from '../../context/user-context';
-import { TUser } from '../../Types/TUser';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../constant/URL';
+import Cookies from 'js-cookie';
+import { ConnectedContext } from '../../context/user-context';
 
 export default function ConnexionModal() {
-    const { onUserChange } = useContext(UserContext);
     const [ident, setIdent] = useState<string>('');
     const [mdp, setMdp] = useState<string>('');
+    const { onUserChange, onTokenChange } = useContext(ConnectedContext);
 
     const notifySuccess = (msg: string) =>
         toast.success(msg, {
@@ -45,7 +45,16 @@ export default function ConnexionModal() {
             .then((response) => response.json())
             .then((response) => {
                 if (response.data) {
-                    changeUser(response.data);
+                    Cookies.set('token', response.data.access_token, {
+                        secure: false,
+                        expires: 7,
+                    });
+                    Cookies.set('user', JSON.stringify(response.data.user), {
+                        secure: false,
+                        expires: 7,
+                    });
+                    onUserChange(response.data.user);
+                    onTokenChange(response.data.access_token);
                     notifySuccess(response.message);
                 } else {
                     notifyError(response.message);
@@ -53,10 +62,6 @@ export default function ConnexionModal() {
             })
             .catch((err) => console.error(err));
     };
-
-    function changeUser(users: TUser) {
-        onUserChange(users);
-    }
 
     return (
         <>

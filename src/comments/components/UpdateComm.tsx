@@ -1,13 +1,11 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { TComments } from '../../navbar/components/types/TComments';
-import { UserContext } from '../../context/user-context';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../constant/URL';
+import Cookies from 'js-cookie';
 
-export default function UpdateComm(props: { content: TComments }) {
-    const [bodyContent, setBodyContent] = useState('');
-    const { user } = useContext(UserContext);
-
+export default function UpdateComm(props: { dataComms: TComments | null }) {
+    const [bodyContent, setBodyContent] = useState<string>('');
     const notifySuccess = (msg: string) =>
         toast.success(msg, {
             position: 'bottom-right',
@@ -21,16 +19,16 @@ export default function UpdateComm(props: { content: TComments }) {
         });
 
     const updater = () => {
-        const options = {
+        const token = Cookies.get('token');
+
+        fetch(`${BASE_URL}/comments/${props.dataComms!.id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${user.access_token}`,
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({ content: bodyContent }),
-        };
-
-        fetch(`${BASE_URL}/comments/${props.content.id}`, options)
+        })
             .then((response) => response.json())
             .then((response) => notifySuccess(response.message))
             .catch((err) => console.error(err));
@@ -66,10 +64,11 @@ export default function UpdateComm(props: { content: TComments }) {
                         >
                             <textarea
                                 className="form-control"
-                                defaultValue={props.content.content}
+                                value={props.dataComms?.content}
                                 onChange={(e) => setBodyContent(e.target.value)}
                             ></textarea>
                             <div className="text-center">
+                                true
                                 <button
                                     type="submit"
                                     className="btn btn-primary mt-2"

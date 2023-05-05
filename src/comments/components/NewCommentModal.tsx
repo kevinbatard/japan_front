@@ -1,14 +1,14 @@
-import { useContext, useState } from 'react';
-import { UserContext } from '../../context/user-context';
+import { useState } from 'react';
 import { TComments } from '../../navbar/components/types/TComments';
 import { TRegion } from '../../Types/TRegion';
 import { toast } from 'react-toastify';
+import Cookies from 'js-cookie';
 
 export default function NewCommentModal(props: {
     comments: TComments[];
+    setComments: React.Dispatch<React.SetStateAction<TComments[]>>;
     dataRegion: TRegion[];
 }) {
-    const { user } = useContext(UserContext);
     const [content, setContent] = useState<string>('');
 
     const notifySuccess = (msg: string) =>
@@ -37,24 +37,29 @@ export default function NewCommentModal(props: {
 
     const newComment = () => {
         const regionId = props.dataRegion[0].id;
-        const options = {
+
+        const accessToken = Cookies.get('token');
+
+        fetch('http://localhost:8000/api/comments', {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${user.access_token}`,
+                Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
                 content,
                 region_id: regionId,
             }),
-        };
-
-        fetch('http://localhost:8000/api/comments', options)
+        })
             .then((response) => response.json())
             .then((response) => {
-                if (response.StatusCode === 201)
+                if (response.StatusCode === 201) {
+                    const newComments = [...props.comments];
+                    newComments.unshift(response.data);
+                    props.setComments(newComments);
                     return notifySuccess(response.message);
-                else {
+                } else {
                     return notifyError(response.message);
                 }
             })

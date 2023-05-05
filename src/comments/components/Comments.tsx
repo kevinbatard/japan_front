@@ -2,20 +2,22 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { TComments } from '../../navbar/components/types/TComments';
 import { TRegion } from '../../Types/TRegion';
 import '../../comments/components/styles/comments-style.css';
-import { UserContext } from '../../context/user-context';
 import DeleteComm from './DeleteComm';
 import UpdateComm from './UpdateComm';
 import { BASE_URL } from '../../constant/URL';
+import { ConnectedContext } from '../../context/user-context';
 
 export default function Comments(props: {
     comments: TComments[];
     setComments: React.Dispatch<React.SetStateAction<TComments[]>>;
     dataRegion: TRegion[];
 }) {
-    const { user } = useContext(UserContext);
     const [hide, setHide] = useState<boolean>(false);
+    const [dataComms, setDataComms] = useState<TComments | null>(null);
 
     const { comments, setComments, dataRegion } = props;
+
+    const { user } = useContext(ConnectedContext);
 
     const regionIdRef = useRef(dataRegion[0].id);
     useEffect(() => {
@@ -59,17 +61,23 @@ export default function Comments(props: {
                                       type="button"
                                       data-bs-target="#updateComment"
                                       data-bs-toggle="modal"
+                                      onClick={() => setDataComms(elm)}
                                   >
                                       Modifier
                                   </button>
-                                  <UpdateComm content={elm} />
+                                  <UpdateComm dataComms={dataComms} />
                               </>
                           )
                         : ''}
 
                     {user.pseudo === elm.user.pseudo ||
                     user.access_lvl === 2 ? (
-                        <DeleteComm idComm={elm.id} setHide={setHide} />
+                        <DeleteComm
+                            idComm={elm.id}
+                            setHide={setHide}
+                            comments={comments}
+                            setComments={setComments}
+                        />
                     ) : null}
                 </div>
             </div>

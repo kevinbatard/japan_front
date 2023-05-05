@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TCategories } from '../types/TCategories';
 import { TRegion } from '../../Types/TRegion';
-import { UserContext } from '../../context/user-context';
 import { TInterests } from '../types/TInterests';
 import { BASE_URL } from '../../constant/URL';
+import Cookies from 'js-cookie';
 
 export default function NewInterestModal(props: {
     dataRegion: TRegion[];
@@ -16,7 +16,8 @@ export default function NewInterestModal(props: {
     const [adresse, setAdresse] = useState<string>('');
     const [lat, setLat] = useState<number | null>(null);
     const [lon, setLon] = useState<number | null>(null);
-    const { user } = useContext(UserContext);
+
+    const token = Cookies.get('token');
 
     useEffect(() => {
         fetch(`${BASE_URL}/categories`)
@@ -30,7 +31,7 @@ export default function NewInterestModal(props: {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${user.access_token}`,
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
                 name: nom,

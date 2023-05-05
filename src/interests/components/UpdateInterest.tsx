@@ -1,8 +1,8 @@
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { TInterests } from '../types/TInterests';
 import { TCategories } from '../types/TCategories';
 import { BASE_URL } from '../../constant/URL';
-import { UserContext } from '../../context/user-context';
+import Cookies from 'js-cookie';
 
 export default function UpdateInterest(props: {
     interests: TInterests[];
@@ -14,7 +14,6 @@ export default function UpdateInterest(props: {
     const [newInterest, setNewInterest] = useState<TInterests | null>(
         props.dataInterest
     );
-    const { user } = useContext(UserContext);
 
     const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { title, value } = e.currentTarget;
@@ -59,23 +58,20 @@ export default function UpdateInterest(props: {
         </li>
     ));
 
-    const options = {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${user.access_token}`,
-        },
-        body: JSON.stringify({
-            ...newInterest,
-            category: selected?.id,
-        }),
-    };
+    const token = Cookies.get('token');
 
     const update = () => {
-        fetch(
-            `http://localhost:8000/api/interests/${props.dataInterest!.id}`,
-            options
-        )
+        fetch(`http://localhost:8000/api/interests/${props.dataInterest!.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                ...newInterest,
+                category: selected?.id,
+            }),
+        })
             .then((response) => response.json())
             .then((response) => {
                 const newInterest = [...props.interests];

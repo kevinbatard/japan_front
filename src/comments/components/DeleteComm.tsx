@@ -1,15 +1,17 @@
-import { useContext, useState } from 'react';
-import { UserContext } from '../../context/user-context';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import '../components/styles/comments-style.css';
 import { BASE_URL } from '../../constant/URL';
+import Cookies from 'js-cookie';
+import { TComments } from '../../navbar/components/types/TComments';
 
 export default function DeleteComm(props: {
     idComm: number;
     setHide: React.Dispatch<React.SetStateAction<boolean>>;
+    comments: TComments[];
+    setComments: React.Dispatch<React.SetStateAction<TComments[]>>;
 }) {
     const [onDelete, setOnDelete] = useState<boolean>(false);
-    const { user } = useContext(UserContext);
 
     const notifySuccess = (msg: string) =>
         toast.success(msg, {
@@ -22,18 +24,22 @@ export default function DeleteComm(props: {
             progress: undefined,
             theme: 'light',
         });
-
+    const token = Cookies.get('token');
     const deleteComm = () => {
-        const options = {
+        fetch(`${BASE_URL}/comments/${props.idComm}`, {
             method: 'DELETE',
+            credentials: 'include',
             headers: {
-                Authorization: `Bearer ${user.access_token}`,
+                Authorization: `Bearer ${token}`,
             },
-        };
-
-        fetch(`${BASE_URL}/comments/${props.idComm}`, options)
+        })
             .then((response) => response.json())
-            .then((response) => notifySuccess(response.message))
+            .then((response) => {
+                props.setComments(
+                    props.comments.filter((item) => item.id !== props.idComm)
+                );
+                notifySuccess(response.message);
+            })
             .catch((err) => console.error(err));
     };
 
@@ -56,6 +62,7 @@ export default function DeleteComm(props: {
                         onClick={() => {
                             deleteComm();
                             setOnDelete(false);
+                            props.setHide(false);
                         }}
                     >
                         Confirmer

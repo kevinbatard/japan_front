@@ -60,6 +60,7 @@ export default function Details(props: {
                     </button>
                     <NewCommentModal
                         comments={comments}
+                        setComments={setComments}
                         dataRegion={dataRegion}
                     />
                 </div>

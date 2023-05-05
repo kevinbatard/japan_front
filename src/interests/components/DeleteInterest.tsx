@@ -1,6 +1,6 @@
-import { useContext, useState } from 'react';
-import { UserContext } from '../../context/user-context';
+import { useState } from 'react';
 import { TInterests } from '../types/TInterests';
+import Cookies from 'js-cookie';
 
 export default function DeleteInterest(props: {
     hide: boolean;
@@ -10,12 +10,13 @@ export default function DeleteInterest(props: {
     setInterests: React.Dispatch<React.SetStateAction<TInterests[]>>;
 }) {
     const [onDelete, setOnDelete] = useState<boolean>(false);
-    const { user } = useContext(UserContext);
+
+    const token = Cookies.get('token');
 
     const options = {
         method: 'DELETE',
         headers: {
-            Authorization: `Bearer ${user.access_token}`,
+            Authorization: `Bearer ${token}`,
         },
     };
 

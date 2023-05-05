@@ -1,14 +1,17 @@
-import { useContext } from 'react';
 import './styles/navbar-style.css';
-import { UserContext } from '../../context/user-context';
 import ConnexionModal from './ConnexionModal';
 import RegisterModal from './RegisterModal';
 import '../../region/styles/region-style.css';
+import Cookies from 'js-cookie';
+import { useContext } from 'react';
+import { ConnectedContext } from '../../context/user-context';
+import { DEFAULT_USER } from '../../constant/visitor';
 
 export default function Navbar(props: {
     setPage: React.Dispatch<React.SetStateAction<string>>;
 }) {
-    const { user } = useContext(UserContext);
+    const { token, onTokenChange, onUserChange } = useContext(ConnectedContext);
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light navbar-color">
             <div className="container-fluid justify-content-between ">
@@ -35,7 +38,7 @@ export default function Navbar(props: {
                     id="navbarNav"
                 >
                     <ul className="navbar-nav">
-                        {!user.access_token && (
+                        {!token && (
                             <>
                                 <li className="nav-item">
                                     <a
@@ -64,17 +67,36 @@ export default function Navbar(props: {
                             </>
                         )}
 
-                        {user.access_token && (
-                            <li>
-                                <div className="navbar-nav">
-                                    <a
-                                        className=" mx-2 fs-2 fw-semibold nav-link connect"
-                                        href="#0"
-                                    >
-                                        Profile
-                                    </a>
-                                </div>
-                            </li>
+                        {token && (
+                            <>
+                                <li>
+                                    <div className="navbar-nav">
+                                        <a
+                                            className=" mx-2 fs-2 fw-semibold nav-link connect"
+                                            href="#0"
+                                        >
+                                            Profile
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div className="navbar-nav">
+                                        <a
+                                            className=" mx-2 fs-2 fw-semibold nav-link connect"
+                                            href="#0"
+                                            onClick={() => {
+                                                Cookies.remove('user');
+                                                Cookies.remove('token');
+                                                props.setPage('Accueil');
+                                                onTokenChange(null);
+                                                onUserChange(DEFAULT_USER);
+                                            }}
+                                        >
+                                            Déconnexion
+                                        </a>
+                                    </div>
+                                </li>
+                            </>
                         )}
                     </ul>
                 </div>
