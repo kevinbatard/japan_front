@@ -65,7 +65,6 @@ export default function NewCommentModal(props: {
       })
       .catch((err) => console.error(err));
   };
-  console.log(content);
 
   return (
     <div>
