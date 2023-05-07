@@ -21,13 +21,25 @@ export default function Profil() {
       </div>
       <div className="align-self-center">
         {user.visited_regions.length > 0 && (
-          <img style={{ height: 220 }} src={`./img/ranks/bronze.png`} />
+          <img
+            style={{ height: 220 }}
+            src={`./img/ranks/bronze.png`}
+            alt="badge bronze"
+          />
         )}
         {user.visited_regions.length > 3 && (
-          <img style={{ height: 220 }} src={`./img/ranks/argent.png`} />
+          <img
+            style={{ height: 220 }}
+            src={`./img/ranks/argent.png`}
+            alt="badge argent"
+          />
         )}
         {user.visited_regions.length > 5 && (
-          <img style={{ height: 220 }} src={`./img/ranks/or.png`} />
+          <img
+            style={{ height: 220 }}
+            src={`./img/ranks/or.png`}
+            alt="badge or"
+          />
         )}
       </div>
     </div>

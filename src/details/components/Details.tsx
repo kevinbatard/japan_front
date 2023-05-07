@@ -18,12 +18,18 @@ export default function Details(props: {
 }) {
   const [comments, setComments] = useState<TComments[]>([]);
   const [interests, setInterests] = useState<TInterests[]>([]);
-  const [visited, setVisited] = useState<boolean>(false);
-  const { token } = useContext(ConnectedContext);
+
+  const { token, user, onUserChange } = useContext(ConnectedContext);
 
   const dataRegion = props.region.filter(
     (elm) => elm.name === props.regionHover
   );
+
+  const isVisited = user.visited_regions
+    .map((elm) => elm.id)
+    .includes(dataRegion[0].id);
+
+  const [visited, setVisited] = useState<boolean>(isVisited);
 
   const region = useRef(dataRegion[0].id);
 
@@ -36,26 +42,43 @@ export default function Details(props: {
       .catch((err) => console.error(err));
   }, [region]);
 
-  const isVisited = () => {
+  const iVisited = () => {
     const token = Cookies.get("token");
 
-    fetch(`${BASE_URL}/users/`, {
-      method: "PATCH",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ region_id: region.current }),
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response);
-
-        if (visited === false) setVisited(true);
-        if (visited === true) setVisited(false);
+    if (visited === false) {
+      return fetch(`${BASE_URL}/users/add`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ region_id: region.current }),
       })
-      .catch((err) => console.error(err));
+        .then((response) => response.json())
+        .then((response) => {
+          onUserChange(response.data);
+          setVisited(true);
+        })
+        .catch((err) => console.error(err));
+    }
+    if (visited === true) {
+      return fetch(`${BASE_URL}/users/remove`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ region_id: region.current }),
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          onUserChange(response.data);
+          setVisited(false);
+        })
+        .catch((err) => console.error(err));
+    }
   };
 
   return (
@@ -75,13 +98,24 @@ export default function Details(props: {
       <div className="container">
         {token && (
           <div className="form-check d-flex justify-content-center mt-4">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              value=""
-              id="checkVisit"
-              onClick={isVisited}
-            />
+            {isVisited ? (
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value=""
+                defaultChecked
+                id="checkVisit"
+                onClick={iVisited}
+              />
+            ) : (
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value=""
+                id="checkVisit"
+                onClick={iVisited}
+              />
+            )}
             <label className="form-check-label" htmlFor="checkVisit">
               Visité !
             </label>
