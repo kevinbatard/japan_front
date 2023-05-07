@@ -10,6 +10,7 @@ import { TInterests } from "../../interests/types/TInterests";
 import { BASE_URL } from "../../constant/URL";
 import { ConnectedContext } from "../../context/user-context";
 import ConnexionModal from "../../navbar/components/ConnexionModal";
+import Cookies from "js-cookie";
 
 export default function Details(props: {
   regionHover: string;
@@ -17,6 +18,7 @@ export default function Details(props: {
 }) {
   const [comments, setComments] = useState<TComments[]>([]);
   const [interests, setInterests] = useState<TInterests[]>([]);
+  const [visited, setVisited] = useState<boolean>(false);
   const { token } = useContext(ConnectedContext);
 
   const dataRegion = props.region.filter(
@@ -34,6 +36,28 @@ export default function Details(props: {
       .catch((err) => console.error(err));
   }, [region]);
 
+  const isVisited = () => {
+    const token = Cookies.get("token");
+
+    fetch(`${BASE_URL}/users/`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ region_id: region.current }),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+
+        if (visited === false) setVisited(true);
+        if (visited === true) setVisited(false);
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <>
       <div className=" first-block">
@@ -49,6 +73,20 @@ export default function Details(props: {
         </div>
       </div>
       <div className="container">
+        {token && (
+          <div className="form-check d-flex justify-content-center mt-4">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value=""
+              id="checkVisit"
+              onClick={isVisited}
+            />
+            <label className="form-check-label" htmlFor="checkVisit">
+              Visité !
+            </label>
+          </div>
+        )}
         <div className="mt-4 size">
           <p>{dataRegion[0].description}</p>
         </div>

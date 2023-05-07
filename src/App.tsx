@@ -12,6 +12,7 @@ import Details from "./details/components/Details";
 import { BASE_URL } from "./constant/URL";
 import { ConnectedContext } from "./context/user-context";
 import Cookies from "js-cookie";
+import Profil from "./profil/components/Profil";
 
 function App() {
   const [showComponent, setShowComponent] = useState<boolean>(false);
@@ -76,6 +77,7 @@ function App() {
             </div>
           </div>
         )}
+        {page === "Profil" && <Profil />}
       </main>
       <footer></footer>
     </div>
