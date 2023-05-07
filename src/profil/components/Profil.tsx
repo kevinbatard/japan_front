@@ -5,15 +5,30 @@ export default function Profil() {
   const { user } = useContext(ConnectedContext);
 
   return (
-    <div className="m-2 border border-2 rounded rounded-4 px-4 pt-4 ">
-      <h1 className="mb-5">Profile :</h1>
-      <p>
-        <span className="fw-bold">Pseudo</span> : {user.pseudo}
-      </p>
-      <div className="d-flex align-center mb-5 flex-wrap align-items-end">
+    <div className=" d-flex justify-content-center flex-wrap">
+      <div className="m-2  px-4 pt-4">
+        <h1 className="mb-5">Profile :</h1>
+        <p>
+          <span className="fw-bold">Pseudo</span> : {user.pseudo}
+        </p>
         <p>
           <span className="fw-bold">E-Mail</span> : {user.email}
         </p>
+        <p>
+          <span className="fw-bold">Regions visitées</span> :{" "}
+          {user.visited_regions.length}
+        </p>
+      </div>
+      <div className="align-self-center">
+        {user.visited_regions.length > 0 && (
+          <img style={{ height: 220 }} src={`./img/ranks/bronze.png`} />
+        )}
+        {user.visited_regions.length > 3 && (
+          <img style={{ height: 220 }} src={`./img/ranks/argent.png`} />
+        )}
+        {user.visited_regions.length > 5 && (
+          <img style={{ height: 220 }} src={`./img/ranks/or.png`} />
+        )}
       </div>
     </div>
   );
