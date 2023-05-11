@@ -1,8 +1,9 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { TInterests } from "../types/TInterests";
 import { TCategories } from "../types/TCategories";
 import { BASE_URL } from "../../constant/URL";
 import Cookies from "js-cookie";
+import { ToastContext } from "../../context/toast-constant";
 
 export default function UpdateInterest(props: {
   interests: TInterests[];
@@ -14,6 +15,7 @@ export default function UpdateInterest(props: {
   const [newInterest, setNewInterest] = useState<TInterests | null>(
     props.dataInterest
   );
+  const { successToast, failToast } = useContext(ToastContext);
 
   const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { title, value } = e.currentTarget;
@@ -75,13 +77,18 @@ export default function UpdateInterest(props: {
     })
       .then((response) => response.json())
       .then((response) => {
-        const newInterest = [...props.interests];
-        const updateInterests = newInterest.map((elm: TInterests) => {
-          if (elm.id === props.dataInterest?.id) return response.data;
-          return elm;
-        });
-        props.setInterests(updateInterests);
-        console.log(updateInterests);
+        if (response.data) {
+          const newInterest = [...props.interests];
+          const updateInterests = newInterest.map((elm: TInterests) => {
+            if (elm.id === props.dataInterest?.id) return response.data;
+
+            return elm;
+          });
+          props.setInterests(updateInterests);
+          successToast(response.message);
+        } else {
+          failToast(response.message);
+        }
       })
       .catch((err) => console.error(err));
   };

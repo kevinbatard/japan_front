@@ -1,38 +1,15 @@
 import { useContext, useState } from "react";
 import "./styles/modal-style.css";
-import { toast } from "react-toastify";
 import { BASE_URL } from "../../constant/URL";
 import Cookies from "js-cookie";
 import { ConnectedContext } from "../../context/user-context";
+import { ToastContext } from "../../context/toast-constant";
 
 export default function ConnexionModal() {
   const [ident, setIdent] = useState<string>("");
   const [mdp, setMdp] = useState<string>("");
   const { onUserChange, onTokenChange } = useContext(ConnectedContext);
-
-  const notifySuccess = (msg: string) =>
-    toast.success(msg, {
-      position: "bottom-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-
-  const notifyError = (msg: string) =>
-    toast.error(msg, {
-      position: "bottom-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+  const { successToast, failToast } = useContext(ToastContext);
 
   const connexion = () => {
     const options = {
@@ -46,18 +23,20 @@ export default function ConnexionModal() {
       .then((response) => {
         if (response.data) {
           Cookies.set("token", response.data.access_token, {
-            secure: false,
-            expires: 7,
+            secure: true,
+            expires: 1,
+            sameSite: "strict",
           });
           Cookies.set("user", JSON.stringify(response.data.user), {
-            secure: false,
-            expires: 7,
+            secure: true,
+            expires: 1,
+            sameSite: "strict",
           });
           onUserChange(response.data.user);
           onTokenChange(response.data.access_token);
-          notifySuccess(response.message);
+          successToast(response.message);
         } else {
-          notifyError(response.message);
+          failToast(response.message);
         }
       })
       .catch((err) => console.error(err));

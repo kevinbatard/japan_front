@@ -5,5 +5,6 @@ export type TUser = {
   pseudo: string;
   email: string;
   visited_regions: TRegion[];
+  ranks: string;
   access_lvl: number;
 };

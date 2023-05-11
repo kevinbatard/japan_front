@@ -83,7 +83,7 @@ export default function Details(props: {
 
   return (
     <>
-      <div className=" first-block">
+      <div className="first-block">
         <img
           src={`./img/articles/${dataRegion[0].name}.jpg`}
           className="img-fluid banner photo-brightness"
@@ -164,7 +164,7 @@ export default function Details(props: {
               interests={interests}
             />
           </div>
-          <p className="size fw-semibold ">Ils vous recommandes : </p>
+          <p className="size fw-semibold ">Ils vous recommandent : </p>
           <MapInterest
             interests={interests}
             dataRegion={dataRegion}

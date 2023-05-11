@@ -5,5 +5,6 @@ export const DEFAULT_USER: TUser = {
   pseudo: "",
   email: "",
   visited_regions: [],
+  ranks: "Visiteur",
   access_lvl: 0,
 };

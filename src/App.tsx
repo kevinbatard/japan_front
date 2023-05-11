@@ -6,7 +6,6 @@ import Card from "./carte/components/Card";
 import Carte from "./carte/components/Carte";
 import Navbar from "./navbar/components/Navbar";
 import { TRegion } from "./Types/TRegion";
-import { ToastContainer } from "react-toastify";
 import Regions from "./region/components/Regions";
 import Details from "./details/components/Details";
 import { BASE_URL } from "./constant/URL";
@@ -20,8 +19,17 @@ function App() {
   const [regionHover, setRegionHover] = useState<string>("");
   const [region, setRegion] = useState<TRegion[]>([]);
 
-  const { onTokenChange } = useContext(ConnectedContext);
-  const { onUserChange } = useContext(ConnectedContext);
+  const { onTokenChange, onUserChange, user } = useContext(ConnectedContext);
+
+  /* useEffect(() => {
+    if (user.visited_regions.length >= 0 && user.visited_regions.length <= 1){
+      const newRank = {...user}
+      newRank.ranks = 
+    }
+    if(user.visited_regions.length >= 2 && user.visited_regions.length <= 4)
+    if(user.visited_regions.length >= 5 && user.visited_regions.length <= 7)
+    if(user.visited_regions.length === 8)
+  }); */
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -47,7 +55,6 @@ function App() {
     <div className="App">
       <header>
         <Navbar setPage={setPage} />
-        <ToastContainer />
       </header>
       <main>
         {page === "Details" && (
@@ -60,11 +67,16 @@ function App() {
               setPage={setPage}
               setRegionHover={setRegionHover}
             />
-            <ToastContainer />
+
             <div className="d-flex justify-content-around align-items-center accueil card-region mt-4">
               <div className="me-3 pb-5 card-style carte">
-                {showComponent && (
+                {showComponent ? (
                   <Card regionHover={regionHover} region={region} />
+                ) : (
+                  <p className="fs-2 font fw-bold">
+                    Survolez les régions de la carte pour en savoir plus !<br />
+                    Cliquez pour en parler.
+                  </p>
                 )}
               </div>
               <div className="me-5 carte">

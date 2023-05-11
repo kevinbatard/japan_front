@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TComments } from "../../navbar/components/types/TComments";
-import { toast } from "react-toastify";
 import { BASE_URL } from "../../constant/URL";
 import Cookies from "js-cookie";
+import { ToastContext } from "../../context/toast-constant";
 
 export default function UpdateComm(props: {
   dataComms: TComments | null;
@@ -10,17 +10,7 @@ export default function UpdateComm(props: {
   setComments: React.Dispatch<React.SetStateAction<TComments[]>>;
 }) {
   const [bodyContent, setBodyContent] = useState<string | undefined>("");
-  const notifySuccess = (msg: string) =>
-    toast.success(msg, {
-      position: "bottom-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+  const { successToast } = useContext(ToastContext);
 
   useEffect(() => {
     setBodyContent(props.dataComms?.content);
@@ -46,7 +36,7 @@ export default function UpdateComm(props: {
           return elm;
         });
         props.setComments(updateComments);
-        notifySuccess(response.message);
+        successToast(response.message);
       })
       .catch((err) => console.error(err));
   };

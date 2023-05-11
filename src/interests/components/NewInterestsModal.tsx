@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TCategories } from "../types/TCategories";
 import { TRegion } from "../../Types/TRegion";
 import { TInterests } from "../types/TInterests";
 import { BASE_URL } from "../../constant/URL";
 import Cookies from "js-cookie";
+import { ToastContext } from "../../context/toast-constant";
 
 export default function NewInterestModal(props: {
   dataRegion: TRegion[];
@@ -16,6 +17,7 @@ export default function NewInterestModal(props: {
   const [adresse, setAdresse] = useState<string>("");
   const [lat, setLat] = useState<number | null>(null);
   const [lon, setLon] = useState<number | null>(null);
+  const { successToast, failToast } = useContext(ToastContext);
 
   const token = Cookies.get("token");
 
@@ -45,9 +47,14 @@ export default function NewInterestModal(props: {
     })
       .then((response) => response.json())
       .then((response) => {
-        const newInterests = [...props.interests];
-        newInterests.push(response.data);
-        props.setInterests(newInterests);
+        if (response.data) {
+          const newInterests = [...props.interests];
+          newInterests.push(response.data);
+          props.setInterests(newInterests);
+          successToast(response.message);
+        } else {
+          failToast(response.message);
+        }
       })
       .catch((err) => console.error(err));
   };

@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { TInterests } from "../types/TInterests";
 import Cookies from "js-cookie";
 import { BASE_URL } from "../../constant/URL";
+import { ToastContext } from "../../context/toast-constant";
 
 export default function DeleteInterest(props: {
   hide: boolean;
@@ -11,6 +12,7 @@ export default function DeleteInterest(props: {
   setInterests: React.Dispatch<React.SetStateAction<TInterests[]>>;
 }) {
   const [onDelete, setOnDelete] = useState<boolean>(false);
+  const { successToast } = useContext(ToastContext);
 
   const token = Cookies.get("token");
 
@@ -23,11 +25,12 @@ export default function DeleteInterest(props: {
       },
     })
       .then((response) => response.json())
-      .then(() =>
+      .then((response) => {
         props.setInterests(
           props.interests.filter((elm) => elm.id !== props.popId)
-        )
-      )
+        );
+        successToast(response.message);
+      })
       .catch((err) => console.error(err));
 
   return (

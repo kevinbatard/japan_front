@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { TComments } from "../../navbar/components/types/TComments";
 import { TRegion } from "../../Types/TRegion";
-import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import { ToastContext } from "../../context/toast-constant";
 
 export default function NewCommentModal(props: {
   comments: TComments[];
@@ -10,30 +10,7 @@ export default function NewCommentModal(props: {
   dataRegion: TRegion[];
 }) {
   const [content, setContent] = useState<string>("");
-
-  const notifySuccess = (msg: string) =>
-    toast.success(msg, {
-      position: "bottom-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "light",
-    });
-
-  const notifyError = (msg: string) =>
-    toast.error(msg, {
-      position: "bottom-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "light",
-    });
+  const { successToast, failToast } = useContext(ToastContext);
 
   const newComment = () => {
     const regionId = props.dataRegion[0].id;
@@ -58,9 +35,9 @@ export default function NewCommentModal(props: {
           const newComments = [...props.comments];
           newComments.unshift(response.data);
           props.setComments(newComments);
-          return notifySuccess(response.message);
+          return successToast(response.message);
         } else {
-          return notifyError(response.message);
+          return failToast(response.message);
         }
       })
       .catch((err) => console.error(err));
