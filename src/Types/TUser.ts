@@ -1,10 +1,11 @@
-import { TRegion } from "./TRegion";
+import { TRank } from '../profil/components/TRank';
+import { TRegion } from './TRegion';
 
 export type TUser = {
-  id: number;
-  pseudo: string;
-  email: string;
-  visited_regions: TRegion[];
-  ranks: string;
-  access_lvl: number;
+    id: number;
+    pseudo: string;
+    email: string;
+    visited_regions: TRegion[];
+    ranks: TRank;
+    access_lvl: number;
 };
